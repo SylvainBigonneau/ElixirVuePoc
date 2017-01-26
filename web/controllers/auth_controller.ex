@@ -15,13 +15,12 @@ defmodule DiscussVue.AuthController do
         case insert_or_update_user(changeset) do
             {:ok, user} ->
                 conn
-                |> put_flash(:info, "Welcome back!")
                 |> put_session(:user_id, user.id)            
+                |> redirect(to: "/#/login?email=#{user.email}")
             {:error, _reason} ->
                 conn
-                |> put_flash(:error, "Error signing in")
+                |> redirect(to: "/#/login?failed=1")
         end
-        |> redirect(to: page_path(conn, :index))
     end
 
     defp insert_or_update_user(changeset) do
@@ -36,6 +35,6 @@ defmodule DiscussVue.AuthController do
     def signout(conn, _params) do
         conn
         |> configure_session(drop: true)
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: "/#/logout")
     end
 end

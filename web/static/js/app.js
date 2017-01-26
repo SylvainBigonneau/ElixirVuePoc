@@ -23,14 +23,19 @@ import "phoenix_html"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import VueLocalStorage from 'vue-localstorage'
 
 import App from "../components/app.vue"
+import MainLayout from "../components/layout/main-layout.vue"
+import Login from "../components/auth/login.vue"
+import Logout from "../components/auth/logout.vue"
 import Home from "../components/pages/home.vue"
 import New from "../components/pages/new.vue"
 import Edit from "../components/pages/edit.vue"
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.use(VueLocalStorage)
 
 Vue.http.options.root = '/api'
 
@@ -39,9 +44,16 @@ Vue.component('app', App)
 
 const router = new VueRouter({
   routes: [
-      { name: 'home', path: '/', component: Home },
-      { path: '/topics/new', name:'newTopic', component: New},
-      { path: '/topics/:id/edit', name: 'editTopic', component: Edit}
+    { path: '/login', component: Login },
+    { path: '/logout', component: Logout },
+    {
+      path: '/', component: MainLayout,
+      children: [
+        { name: 'home', path: '/', component: Home },
+        { path: '/topics/new', name: 'newTopic', component: New },
+        { path: '/topics/:id/edit', name: 'editTopic', component: Edit }
+      ]
+    }
   ]
 })
 
@@ -49,6 +61,11 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  localStorage: {
+    connected: {
+      type: Boolean
+    }
+  },
   render(createElement) {
     return createElement(App, {})
   }

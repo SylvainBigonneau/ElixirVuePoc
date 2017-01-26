@@ -4,8 +4,8 @@ defmodule DiscussVue.TopicController do
     alias DiscussVue.Topic
     alias DiscussVue.User
 
-    # plug DiscussVue.Plugs.RequireAuth when action in [:create, :update, :delete]
-    # plug :check_topic_owner when action in [:update, :delete]
+    plug DiscussVue.Plugs.RequireAuth when action in [:create, :update, :delete]
+    plug :check_topic_owner when action in [:update, :delete]
 
     def index(conn, _params) do
         topics = Repo.all(Topic)
@@ -19,7 +19,7 @@ defmodule DiscussVue.TopicController do
     end
 
     def create(conn, %{"topic" => topic}) do
-        changeset = Repo.get(User, 1)
+        changeset = conn.assigns.user
         |> build_assoc(:topics)
         |> Topic.changeset(topic)
 
