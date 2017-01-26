@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AppHeader from './app-header.vue'
+import AppHeader from './layout/app-header.vue'
 
 export default {
   components: {AppHeader}

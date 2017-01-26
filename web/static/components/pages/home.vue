@@ -5,11 +5,14 @@
             <li class="collection-item" v-for="topic in topics">
                 {{ topic.title }}
                 <div class="right">
+                    <router-link :to="{ name: 'editTopic', params: { id: topic.id }}">
+                        Edit
+                    </router-link>
                     <a href="#" v-on:click="deleteTopic(topic.id)">Delete</a>
                 </div>
             </li>
         </ul>
-        <fab icon="add" to="/new" />
+        <fab icon="add" to="newTopic" />
     </div>
 </template>
 

@@ -27,6 +27,7 @@ import VueResource from 'vue-resource'
 import App from "../components/app.vue"
 import Home from "../components/pages/home.vue"
 import New from "../components/pages/new.vue"
+import Edit from "../components/pages/edit.vue"
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -39,7 +40,8 @@ Vue.component('app', App)
 const router = new VueRouter({
   routes: [
       { name: 'home', path: '/', component: Home },
-      { path: '/new', component: New}
+      { path: '/topics/new', name:'newTopic', component: New},
+      { path: '/topics/:id/edit', name: 'editTopic', component: Edit}
   ]
 })
 
