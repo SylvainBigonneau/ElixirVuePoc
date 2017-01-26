@@ -4,6 +4,9 @@
         <ul class="collection">
             <li class="collection-item" v-for="topic in topics">
                 {{ topic.title }}
+                <div class="right">
+                    <a href="#" v-on:click="deleteTopic(topic.id)">Delete</a>
+                </div>
             </li>
         </ul>
         <fab icon="add" to="/new" />
@@ -21,9 +24,10 @@
             }
         },
         created() {
+            this.resource = this.$resource('topics{/id}');
             // fetch the data when the view is created and the data is
             // already being observed
-            this.fetchData()
+            this.fetchData();
         },
         watch: {
             // call again the method if the route changes
@@ -31,9 +35,13 @@
         },
         methods: {
             fetchData() {
-                let resource = this.$resource('topics{/id}');
-                resource.get().then((response) => {
+                this.resource.get().then((response) => {
                     this.topics = response.body
+                });
+            },
+            deleteTopic(id) {
+                this.resource.delete({id}).then((response) => {
+                    this.fetchData();
                 });
             }
         }
