@@ -16,7 +16,7 @@ defmodule DiscussVue.AuthController do
             {:ok, user} ->
                 conn
                 |> put_session(:user_id, user.id)            
-                |> redirect(to: "/#/login?email=#{user.email}")
+                |> redirect(to: "/#/login?email=#{user.email}&id=#{user.id}")
             {:error, _reason} ->
                 conn
                 |> redirect(to: "/#/login?failed=1")

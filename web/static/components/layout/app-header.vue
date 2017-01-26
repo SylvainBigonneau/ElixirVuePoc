@@ -5,7 +5,7 @@
           Discussions
         </a>
       <ul class="right">
-        <li v-if="connected">
+        <li v-if="user_id">
           <a href="/auth/signout">Sign out</a>
         </li>
         <li v-else>
@@ -21,11 +21,11 @@
   export default {
     data() {
       return {
-        connected: false
+        user_id: null
       }
     },
     created() {
-      this.connected = this.$localStorage.get('connected');
+      this.user_id = this.$localStorage.get('user_id');
     }
   }
 </script>

@@ -62,8 +62,8 @@ new Vue({
   el: '#app',
   router,
   localStorage: {
-    connected: {
-      type: Boolean
+    user_id: {
+      type: Number
     }
   },
   render(createElement) {

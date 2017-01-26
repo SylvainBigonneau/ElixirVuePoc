@@ -5,7 +5,7 @@
 <script>
     export default {
         created() {
-            this.$localStorage.set('connected', false)
+            this.$localStorage.remove('user_id');
             Materialize.toast('Disconnected succesfully!', 4000);
             this.$router.push({ name: 'home' });
         }

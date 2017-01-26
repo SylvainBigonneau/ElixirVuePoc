@@ -8,13 +8,13 @@ defmodule DiscussVue.TopicController do
     plug :check_topic_owner when action in [:update, :delete]
 
     def index(conn, _params) do
-        topics = Repo.all(Topic)
+        topics = Repo.all(Topic) |> Repo.preload(:user)
 
         json conn, topics
     end
 
     def show(conn, %{"id" => topic_id}) do
-        topic = Repo.get!(Topic, topic_id)
+        topic = Repo.get!(Topic, topic_id) |> Repo.preload(:user)
         json conn, topic
     end
 

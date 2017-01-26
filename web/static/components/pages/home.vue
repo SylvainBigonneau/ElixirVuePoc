@@ -4,7 +4,7 @@
         <ul class="collection">
             <li class="collection-item" v-for="topic in topics">
                 {{ topic.title }}
-                <div class="right" v-if="connected">
+                <div class="right" v-if="user_id === topic.user.id">
                     <router-link :to="{ name: 'editTopic', params: { id: topic.id }}">
                         Edit
                     </router-link>
@@ -12,7 +12,7 @@
                 </div>
             </li>
         </ul>
-        <fab v-if="connected" icon="add" to="newTopic" />
+        <fab v-if="user_id" icon="add" to="newTopic" />
     </div>
 </template>
 
@@ -24,12 +24,12 @@
         data() {
             return {
                 topics: [],
-                connected: false
+                user_id: null
             }
         },
         created() {
             this.resource = this.$resource('topics{/id}');
-            this.connected = this.$localStorage.get('connected');
+            this.user_id = this.$localStorage.get('user_id');
             // fetch the data when the view is created and the data is
             // already being observed
             this.fetchData();

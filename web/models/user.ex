@@ -1,6 +1,7 @@
 defmodule DiscussVue.User do
     use DiscussVue.Web, :model
 
+    @derive {Poison.Encoder, only: [:id]}
     schema "users" do
         field :email, :string
         field :provider, :string
