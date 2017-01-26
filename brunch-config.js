@@ -68,9 +68,6 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
-    styles: {
-      "materialize-css": ['dist/css/materialize.min.css']
-    }
+    enabled: true
   }
 };
