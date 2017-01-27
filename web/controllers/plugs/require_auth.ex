@@ -12,8 +12,7 @@ defmodule DiscussVue.Plugs.RequireAuth do
             conn
         else
             conn
-            |> put_flash(:error, "You must be logged in.")
-            |> redirect(to: Helpers.topic_path(conn, :index))
+            |> send_resp(401, "Not connected!")
             |> halt()
         end
     end

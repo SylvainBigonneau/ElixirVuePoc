@@ -21,12 +21,12 @@
         },
         methods: {
             fetchData() {
-                this.resource.get({ id: this.$route.params.id }).then((response) => {
+                this.resource.get({ id: this.id }).then((response) => {
                     this.topic = response.body;
                 });
             },
             submitTopic(data) {
-                this.resource.update({ id: this.$route.params.id }, { topic: data }).then((response) => {
+                this.resource.update({ id: this.id }, { topic: data }).then((response) => {
                     this.$router.push({ name: 'home' });
                     Materialize.toast('Topic updated!', 4000);
                 });

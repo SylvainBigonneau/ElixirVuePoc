@@ -24,6 +24,7 @@ defmodule DiscussVue.Router do
   scope "/api", DiscussVue do
     pipe_through :api # Use the default browser stack
 
+    get "/getUserId", AuthController, :get_user_id
     resources "/topics", TopicController
   end
 

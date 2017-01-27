@@ -37,4 +37,8 @@ defmodule DiscussVue.AuthController do
         |> configure_session(drop: true)
         |> redirect(to: "/#/logout")
     end
+
+    def get_user_id(conn, _params) do
+        json conn, %{"user_id" => conn.assigns[:user] && conn.assigns[:user].id}
+    end
 end

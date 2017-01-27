@@ -51,22 +51,27 @@ const router = new VueRouter({
       children: [
         { name: 'home', path: '/', component: Home },
         { path: '/topics/new', name: 'newTopic', component: New },
-        { path: '/topics/:id/edit', name: 'editTopic', component: Edit }
+        { path: '/topics/:id/edit', name: 'editTopic', component: Edit, props: true }
       ]
     }
   ]
 })
 
-// And create the top-level view model:
-new Vue({
-  el: '#app',
-  router,
-  localStorage: {
-    user_id: {
-      type: Number
+Vue.http.get('getUserId').then((resp) => {
+  // And create the top-level view model:
+  new Vue({
+    el: '#app',
+    router,
+    localStorage: {
+      user_id: {
+        type: Number
+      }
+    },
+    created() {
+      this.$localStorage.set('user_id', resp.body.user_id);
+    },
+    render(createElement) {
+      return createElement(App, {})
     }
-  },
-  render(createElement) {
-    return createElement(App, {})
-  }
+  });
 });
