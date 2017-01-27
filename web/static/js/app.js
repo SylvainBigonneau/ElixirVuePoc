@@ -32,6 +32,7 @@ import Logout from "../components/auth/logout.vue"
 import Home from "../components/pages/home.vue"
 import New from "../components/pages/new.vue"
 import Edit from "../components/pages/edit.vue"
+import View from "../components/pages/view.vue"
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -51,7 +52,8 @@ const router = new VueRouter({
       children: [
         { name: 'home', path: '/', component: Home },
         { path: '/topics/new', name: 'newTopic', component: New },
-        { path: '/topics/:id/edit', name: 'editTopic', component: Edit, props: true }
+        { path: '/topics/:id/edit', name: 'editTopic', component: Edit, props: true },
+        { path: '/topics/:id', name: 'viewTopic', component: View, props: true }
       ]
     }
   ]

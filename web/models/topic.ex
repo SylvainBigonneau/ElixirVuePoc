@@ -1,7 +1,7 @@
 defmodule DiscussVue.Topic do
     use DiscussVue.Web, :model
 
-    @derive {Poison.Encoder, only: [:title, :id, :user]}
+    @derive {Poison.Encoder, only: [:title, :id, :user, :comments]}
     schema "topics" do
         field :title, :string
         has_many :comments, DiscussVue.Comment

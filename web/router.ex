@@ -26,6 +26,7 @@ defmodule DiscussVue.Router do
 
     get "/getUserId", AuthController, :get_user_id
     resources "/topics", TopicController
+    resources "/topics/:topic_id/comments", CommentController
   end
 
   scope "/auth", DiscussVue do

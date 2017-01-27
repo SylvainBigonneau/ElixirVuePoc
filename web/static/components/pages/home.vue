@@ -3,7 +3,7 @@
         <h5>Topics</h5>
         <ul class="collection">
             <li class="collection-item" v-for="topic in topics">
-                {{ topic.title }}
+                <router-link :to="{ name: 'viewTopic', params: { id: topic.id }}">{{ topic.title }}</router-link>
                 <div class="right" v-if="user_id === topic.user.id">
                     <router-link :to="{ name: 'editTopic', params: { id: topic.id }}">
                         Edit

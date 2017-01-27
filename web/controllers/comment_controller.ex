@@ -1,34 +1,36 @@
-defmodule DiscussVue.TopicController do
+defmodule DiscussVue.CommentController do
     use DiscussVue.Web, :controller
 
     alias DiscussVue.Topic
+    alias DiscussVue.Comment
 
     plug DiscussVue.Plugs.RequireAuth when action in [:create, :update, :delete]
     plug :check_topic_owner when action in [:update, :delete]
 
-    def index(conn, _params) do
-        topics = Repo.all(Topic) |> Enum.map(&(Map.delete(&1, :comments))) |> Repo.preload(:user)
+    def index(conn, %{"topic_id" => topic_id}) do
+        comments = Repo.all(Comment, topic_id: topic_id) |> Repo.preload(:user)
 
-        json conn, topics
+        json conn, comments
     end
 
-    def show(conn, %{"id" => topic_id}) do
-        topic = Repo.get!(Topic, topic_id) |> Repo.preload([:user, comments: :user])
-        json conn, topic
+    def show(conn, %{"topic_id" => topic_id, "id" => comment_id}) do
+        comment = Repo.get!(Comment, topic_id: topic_id, id: comment_id) |> Repo.preload(:user)
+
+        json conn, comment
     end
 
-    def create(conn, %{"topic" => topic}) do
-        changeset = conn.assigns.user
-        |> build_assoc(:topics)
-        |> Topic.changeset(topic)
+    def create(conn, %{"topic_id" => topic_id, "comment" => comment}) do
+        changeset = Repo.get(Topic, topic_id)
+        |> build_assoc(:comments, user_id: conn.assigns.user.id)
+        |> Comment.changeset(comment)
 
         case Repo.insert(changeset) do
             {:ok, _post} ->
                 conn
-                |> json(topic)
+                |> json(comment)
             {:error, _changeset} ->
                 conn
-                |> send_resp(500, %{"message" => "error creating", "topic" => topic})
+                |> send_resp(500, %{"message" => "error creating", "comment" => comment})
         end
     end
 
